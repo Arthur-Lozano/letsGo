@@ -25,24 +25,24 @@ app.use(methodOverride('_method'));
 // declare port for server
 const PORT = process.env.PORT || 3000;
 
-app.get(“/”, (req, res) => { 
-  db.select(“*”).from(“task”).then(data => {
-  res.render(“index”, { todos: data });
-}).catch(err => res.status(400).json(err));
- });
+app.get('/', (req, res) => {
+  db.select('*').from('task').then(data => {
+    res.render('index', { todos: data });
+  }).catch(err => res.status(400).json(err));
+});
 
 // create new task
-app.post(“/addTask”, (req, res) => {
+app.post('/addTask', (req, res) => {
   const { textTodo } = req.body;
-db(“task”).insert({ task: textTodo }).returning(“*”)
-  .then(_ => {
-    res.redirect(“/”);
-  }).catch(err => {
+  db('task').insert({ task: textTodo }).returning('*')
+    .then(_ => {
+      res.redirect('/');
+    }).catch(err => {
       res.status(400).json({
-        message: “unable to create a new task”
+        message: 'unable to create a new task'
       });
     });
-  });
+});
 
 client.connect()
   .then(() => {
